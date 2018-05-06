@@ -28,6 +28,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.moss.security</groupId>
+            <artifactId>security-pojo</artifactId>
+            <version>0.0.1</version>
+        </dependency>
         <!-- spring boot web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,18 +1,33 @@
 package com.moss.conf;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
+    @Autowired
+    private CustomerSuccessHandler customerSuccessHandler;
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
+
+        http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
+//                .successHandler(customerSuccessHandler)
                 .and()
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated();
+                .authorizeRequests().antMatchers("/login.html").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .csrf().disable();
     }
 }
