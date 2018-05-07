@@ -14,6 +14,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private CustomerSuccessHandler customerSuccessHandler;
 
+    @Autowired
+    private CustomerFailureHandler customerFailureHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -22,10 +25,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
+        /*http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
 //                .successHandler(customerSuccessHandler)
                 .and()
                 .authorizeRequests().antMatchers("/login.html").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .csrf().disable();*/
+        http.formLogin().loginPage("/authtication/require").loginProcessingUrl("/login")
+                .successHandler(customerSuccessHandler)
+                .failureHandler(customerFailureHandler)
+                .and()
+                .authorizeRequests().antMatchers("/authtication/require", "/login.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
