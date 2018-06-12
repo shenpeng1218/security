@@ -20,7 +20,7 @@
   <parent>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-parent</artifactId>
-      <version>1.5.9.RELEASE</version>
+      <version>1.5.13.RELEASE</version>
   </parent>
 
   <build>
@@ -67,12 +67,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid-version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${org.apache.commons-version}</version>
             </dependency>
 
         </dependencies>

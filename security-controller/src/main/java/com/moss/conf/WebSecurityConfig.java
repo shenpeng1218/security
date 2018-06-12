@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
@@ -16,6 +17,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     private CustomerFailureHandler customerFailureHandler;
+
+    @Autowired
+    private SpringSocialConfigurer socialConfigurer;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -32,7 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable();*/
-        http.formLogin().loginPage("/authtication/require").loginProcessingUrl("/login")
+        http.apply(socialConfigurer)
+                .and().
+                formLogin().loginPage("/authtication/require").loginProcessingUrl("/login")
                 .successHandler(customerSuccessHandler)
                 .failureHandler(customerFailureHandler)
                 .and()
