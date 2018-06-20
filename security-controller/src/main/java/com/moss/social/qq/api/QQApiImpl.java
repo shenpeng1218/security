@@ -28,15 +28,19 @@ public class QQApiImpl extends AbstractOAuth2ApiBinding implements QQApi {
         String url = String.format(URL_GET_OPENID, accessToken);
         String result = getRestTemplate().getForObject(url, String.class);
 
-        this.openId = StringUtils.substringBetween(result,"\"openId\":", "}");
+        this.openId = StringUtils.substringBetween(result,"\"openId\":\"", "\"}");
     }
 
     @Override
     public QQUserInfo getUserInfo(){
         String url = String.format(URL_GET_USERINFO, appId, openId);
         String result = getRestTemplate().getForObject(url, String.class);
+
+        QQUserInfo userInfo = null;
         try{
-            return objectMapper.readValue(result, QQUserInfo.class);
+            userInfo = objectMapper.readValue(result, QQUserInfo.class);
+            userInfo.setOpenId(openId);
+            return userInfo;
         }catch (Exception e){
             throw new RuntimeException("获取QQ用户信息失败！");
         }
