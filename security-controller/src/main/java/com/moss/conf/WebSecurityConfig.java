@@ -37,14 +37,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .csrf().disable();*/
         http.apply(socialConfigurer)
-                .and().
-                formLogin().loginPage("/authtication/require").loginProcessingUrl("/login")
-                .successHandler(customerSuccessHandler)
-                .failureHandler(customerFailureHandler)
                 .and()
-                .authorizeRequests().antMatchers("/authtication/require", "/login.html").permitAll()
+                    .formLogin().loginPage("/authtication/require").loginProcessingUrl("/login")
+                    .successHandler(customerSuccessHandler)
+                    .failureHandler(customerFailureHandler)
+                .and()
+                    .authorizeRequests()
+                        .antMatchers(
+                                "/authtication/require",
+                                "/login.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable();
+                    .csrf().disable();
     }
 }

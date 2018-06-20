@@ -10,7 +10,7 @@ import java.io.IOException;
 public class QQApiImpl extends AbstractOAuth2ApiBinding implements QQApi {
 
     private static final String URL_GET_OPENID =
-            "https://graph.qq.com/oauth2.0/me?access_token=YOUR_ACCESS_TOKEN=%s";
+            "https://graph.qq.com/oauth2.0/me?access_token=%s";
 
     private static final String URL_GET_USERINFO =
             "https://graph.qq.com/user/get_user_info?oauth_consumer_key=%s&openid=%s";
@@ -28,7 +28,7 @@ public class QQApiImpl extends AbstractOAuth2ApiBinding implements QQApi {
         String url = String.format(URL_GET_OPENID, accessToken);
         String result = getRestTemplate().getForObject(url, String.class);
 
-        this.openId = StringUtils.substringBetween(result,"\"openId\":\"", "\"}");
+        this.openId = StringUtils.substringBetween(result,"\"openid\":\"", "\"}");
     }
 
     @Override
@@ -45,4 +45,5 @@ public class QQApiImpl extends AbstractOAuth2ApiBinding implements QQApi {
             throw new RuntimeException("获取QQ用户信息失败！");
         }
     }
+
 }
