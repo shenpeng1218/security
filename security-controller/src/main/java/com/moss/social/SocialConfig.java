@@ -1,6 +1,7 @@
 package com.moss.social;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.encrypt.Encryptors;
@@ -20,6 +21,9 @@ public class SocialConfig extends SocialConfigurerAdapter{
     @Autowired
     private DataSource dataSource;
 
+    @Value("${spring.social.filterProcessesUrl}")
+    private String filterProcessesUrl;
+
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         JdbcUsersConnectionRepository repository =
@@ -29,6 +33,7 @@ public class SocialConfig extends SocialConfigurerAdapter{
 
     @Bean
     public SpringSocialConfigurer socialConfigurer(){
-        return new SpringSocialConfigurer();
+        MossSpringSocialConfig config = new MossSpringSocialConfig(filterProcessesUrl);
+        return config;
     }
 }

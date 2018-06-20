@@ -1,6 +1,6 @@
 server:
-  port: 6088
-  context-path: /security
+  port: 9090
+  #context-path: /security
 
 spring:
   datasource:
@@ -30,5 +30,4 @@ spring:
       app-id: 100550231
       app-secret: 69b6ab57b22f3c2fe6a6149274e3295e
       provider-id: callback.do
-
-providerId: qq
+    filterProcessesUrl: /qqLogin

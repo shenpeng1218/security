@@ -17,7 +17,7 @@ public class QQAutoConfig extends SocialAutoConfigurerAdapter{
     @Value("${spring.social.qq.app-secret}")
     private String appSecret;
 
-    @Value("${providerId}")
+    @Value("${spring.social.qq.provider-id}")
     private String prociderId;
 
     @Override
