@@ -1,11 +1,13 @@
 package com.moss.conf;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
@@ -26,7 +28,7 @@ public class MyUserDetailService implements UserDetailsService, SocialUserDetail
         String password = passwordEncoder.encode("123456");
         return new User(username, password,
                 true, true, true, true,
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER"));
         /*return new User("admin", "123456",
                 AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));*/
     }
@@ -36,6 +38,6 @@ public class MyUserDetailService implements UserDetailsService, SocialUserDetail
         String password = passwordEncoder.encode("123456");
         return new SocialUser(userId, password,
                 true, true, true, true,
-                AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,ROLE_USER"));
     }
 }

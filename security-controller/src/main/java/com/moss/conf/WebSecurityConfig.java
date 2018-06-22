@@ -29,13 +29,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        /*http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
+
+/*http.formLogin().loginPage("/login.html").loginProcessingUrl("/login")
 //                .successHandler(customerSuccessHandler)
                 .and()
                 .authorizeRequests().antMatchers("/login.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable();*/
+                .csrf().disable();*//*
+
+        */
         http.apply(socialConfigurer)
                 .and()
                     .formLogin().loginPage("/authtication/require").loginProcessingUrl("/login")
@@ -51,3 +54,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     .csrf().disable();
     }
 }
+
